@@ -1,6 +1,5 @@
 const express = require("express");
 const path = require("path");
-const dbConnection = require("./config/db");
 const Config = require("./config");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
@@ -18,8 +17,9 @@ app.use(cors());
 app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // Updated to serve files from src/uploads
 
 // dbConnection
-dbConnection();
-
+mongoose.connect("mongodb://127.0.0.1:27017/ExpenseTracker")
+  .then("Database Connected Successfull")
+  .catch((error)=>console.error(error))
 // api routes
 app.use("/api/users", userRoutes);
 app.use("/api/expenses", expenseRoutes);
